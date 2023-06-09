@@ -21,4 +21,9 @@ def s2t_post(s2t_post_request=None):  # noqa: E501
     """
     if connexion.request.is_json:
         s2t_post_request = S2tPostRequest.from_dict(connexion.request.get_json())  # noqa: E501
+    
+    #load model
+    #evaluate request
+    #return eval
+
     return 'do some magic!'
