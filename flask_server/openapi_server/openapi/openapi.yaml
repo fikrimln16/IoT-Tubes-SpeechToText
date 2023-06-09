@@ -1,0 +1,84 @@
+openapi: 3.0.3
+info:
+  description: |
+    API for IoT with AI final project.
+    Developed by:
+      - Fikri Maulana
+      - Yasir Khairul Malik
+      - Zikri Kholifah Nur
+  title: IoT with AI - Speech to Text API
+  version: 0.0.1
+servers:
+- url: /
+paths:
+  /s2t:
+    post:
+      operationId: s2t_post
+      requestBody:
+        content:
+          application/json:
+            example:
+              config:
+                encoding: LINEAR16
+                sampleRateHertz: 16000
+                languageCode: en-US
+              audio:
+                content: <Base64-encoded audio>
+            schema:
+              $ref: '#/components/schemas/_s2t_post_request'
+        description: Contain data and metadata of the audio
+      responses:
+        "200":
+          content:
+            application/json:
+              example:
+                transcription: hello world
+              schema:
+                $ref: '#/components/schemas/_s2t_post_200_response'
+          description: Successful transcription
+      summary: Transcribe audio to text
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+components:
+  schemas:
+    _s2t_post_request_config:
+      properties:
+        encoding:
+          title: encoding
+          type: string
+        sampleRateHertz:
+          title: sampleRateHertz
+          type: integer
+        languageCode:
+          title: languageCode
+          type: string
+      title: _s2t_post_request_config
+      type: object
+    _s2t_post_request:
+      properties:
+        config:
+          $ref: '#/components/schemas/_s2t_post_request_config'
+        audio:
+          $ref: '#/components/schemas/_s2t_post_request_audio'
+      required:
+      - audio
+      title: _s2t_post_request
+      type: object
+    _s2t_post_200_response:
+      example:
+        transcription: transcription
+      properties:
+        transcription:
+          title: transcription
+          type: string
+      required:
+      - transcription
+      title: _s2t_post_200_response
+      type: object
+    _s2t_post_request_audio:
+      properties:
+        content:
+          format: byte
+          title: content
+          type: string
+      title: _s2t_post_request_audio
+      type: object
