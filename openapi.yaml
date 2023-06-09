@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: IoT with AI - Speech to Text API
+  version: 0.0.1
+  description: |
+    API for IoT with AI final project.
+    Developed by:
+      - Fikri Maulana
+      - Yasir Khairul Malik
+      - Zikri Kholifah Nur
+paths:
+  /s2t:
+    post:
+      summary: Transcribe audio to text
+      requestBody:
+        description: Contain data and metadata of the audio
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - audio
+              properties:
+                config:
+                  type: object
+                  properties:
+                    encoding:
+                      type: string
+                    sampleRateHertz:
+                      type: integer
+                    languageCode:
+                      type: string
+                audio:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      format: byte
+            example:
+              config:
+                encoding: LINEAR16
+                sampleRateHertz: 16000
+                languageCode: en-US
+              audio:
+                content: <Base64-encoded audio>
+      responses:
+        "200":
+          description: Successful transcription
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - transcription
+                properties:
+                  transcription:
+                    type: string
+              example:
+                transcription: hello world
+
